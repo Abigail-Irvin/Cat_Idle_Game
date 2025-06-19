@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://qsbbh3831kmf"]
+
+[ext_resource type="Texture2D" uid="uid://c1boq4r42we1a" path="res://assets/icon.svg" id="1_dp4iv"]
+[ext_resource type="Script" uid="uid://6lwv7ktojx5h" path="res://scripts/Dropdown_Logic.gd" id="2_78rsi"]
+
+[node name="DropdownButton" type="MenuButton"]
+offset_right = 136.0
+offset_bottom = 136.0
+icon = ExtResource("1_dp4iv")
+item_count = 1
+popup/item_0/text = "Test"
+popup/item_0/id = 0
+script = ExtResource("2_78rsi")

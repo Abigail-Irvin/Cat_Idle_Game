@@ -1,0 +1,191 @@
+[gd_scene load_steps=9 format=3 uid="uid://csq8b2wv8aqau"]
+
+[ext_resource type="Script" uid="uid://cnmtmig4wfqhh" path="res://scripts/main_ui.gd" id="1_hcnxy"]
+[ext_resource type="PackedScene" uid="uid://qsbbh3831kmf" path="res://scenes/ui/Dropdown_Button.tscn" id="1_hnesk"]
+[ext_resource type="Texture2D" uid="uid://euq327p8044c" path="res://assets/game_background.png" id="2_travt"]
+[ext_resource type="Texture2D" uid="uid://cyppvt2elg2xi" path="res://assets/babi.png" id="3_l8t6x"]
+[ext_resource type="Texture2D" uid="uid://bpl5vrt6btmpd" path="res://assets/0_food.png" id="4_46cp5"]
+[ext_resource type="Texture2D" uid="uid://bihiafxegvvu1" path="res://assets/0_bed.png" id="5_oxwcw"]
+[ext_resource type="Texture2D" uid="uid://120hx1lv1c2d" path="res://assets/0_toy.png" id="6_yc0ux"]
+[ext_resource type="Texture2D" uid="uid://cn210p0lqd5yb" path="res://assets/0_litter.png" id="8_b65ll"]
+
+[node name="MainUi" type="Control" node_paths=PackedStringArray("kbity_ref", "bed_ref", "food_ref", "toy_ref", "litter_ref", "happy_bar", "hungi_bar", "energy_bar", "kbity_bux_bar", "console")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hcnxy")
+kbity_ref = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2/Kbity_Button")
+bed_ref = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/Bed_Button")
+food_ref = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/Food_Button")
+toy_ref = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2/Toy_Button")
+litter_ref = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2/Litter_Button")
+happy_bar = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Happy_Bar")
+hungi_bar = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Hungi_Bar")
+energy_bar = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Energy_Bar")
+kbity_bux_bar = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2/Kbity_Bux_Bar")
+toy_img_list = ["res://assets/0_toy.png", "res://assets/1_toy.png", "res://assets/2_toy.png", "res://assets/3_toy.png", "res://assets/4_toy.png"]
+bed_img_list = ["res://assets/0_bed.png", "res://assets/1_bed.png", "res://assets/2_bed.png", "res://assets/3_bed.png", "res://assets/4_bed.png"]
+food_img_list = ["res://assets/0_food.png", "res://assets/1_food.png", "res://assets/2_food.png", "res://assets/3_food.png", "res://assets/4_food.png"]
+litter_img_list = ["res://assets/0_litter.png", "res://assets/1_litter.png", "res://assets/2_litter.png", "res://assets/3_litter.png", "res://assets/4_litter.png"]
+toy_desc_list = ["Old tattered toy mouse, poor kbity 3:", "Brand new mouse, and a scratching post!", "Adding feather tassels to the scratching post helps keep kbity in shape!", "Now adding a laser pointer camera to help play with kbity while you're out", "Woah- is kbity wheel, it generates 1.21 kbitywatts (very smol)"]
+bed_desc_list = ["Just some old newspapers, kbity nu like sleeping here", "A lil comfy bed for kbity", "comfy bed, now with added pillow support, helps with giving kbity good dreams", "A cozy little cover for the kbity bed, to help when she sleeps in", "Fully enclosed kbity home, nice and cozy"]
+food_desc_list = ["This is just some bologna on a paper plate", "Generic kibble and water", "Name brand kibble and water", "Fresh sushi for kbity!", "Woah kbity has a whole market for her foods- it's bigger on the inside!"]
+litter_desc_list = ["Kbityzon box you've converted to a makeshift litterbox", "Cheap plastic tub for litter, good enough", "This thing said it was an auto scooper- oops you bought the early access- maybe if you keep throwing money at it, it'll get better", "Actually automated litterbox! Yay to no more scooping", "Does kbity need a gamer rgb litterbox? No- but it's cool"]
+toy_cost_list = [5, 10, 15, 20, 25]
+bed_cost_list = [6, 12, 24, 48, 96]
+food_cost_list = [5, 10, 15, 20, 25]
+litter_cost_list = [5, 10, 15, 20, 25]
+max_level = 5
+kbity_awake_img = "res://assets/babi.png"
+kbity_eepy_img = "res://assets/babi_eepy.png"
+console = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Console")
+
+[node name="Panel" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_travt")
+expand_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 75
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Toy_Button" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("1_hnesk")]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+icon = ExtResource("6_yc0ux")
+expand_icon = true
+item_count = 2
+popup/item_0/text = "Details"
+popup/item_1/text = "Upgrade"
+popup/item_1/id = 1
+click_type = 1
+
+[node name="Kbity_Button" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("1_hnesk")]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+icon = ExtResource("3_l8t6x")
+icon_alignment = 1
+vertical_icon_alignment = 2
+expand_icon = true
+item_count = 4
+popup/item_0/text = "Pet"
+popup/item_1/text = "Treat"
+popup/item_1/id = 1
+popup/item_2/text = "Play"
+popup/item_2/id = 2
+popup/item_3/text = "Brush"
+popup/item_3/id = 3
+
+[node name="Litter_Button" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("1_hnesk")]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+icon = ExtResource("8_b65ll")
+expand_icon = true
+item_count = 2
+popup/item_0/text = "Details"
+popup/item_1/text = "Upgrade"
+popup/item_1/id = 1
+click_type = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Bed_Button" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("1_hnesk")]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+icon = ExtResource("5_oxwcw")
+expand_icon = true
+item_count = 2
+popup/item_0/text = "Details"
+popup/item_1/text = "Upgrade"
+popup/item_1/id = 1
+click_type = 2
+
+[node name="Food_Button" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("1_hnesk")]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+icon = ExtResource("4_46cp5")
+expand_icon = true
+item_count = 2
+popup/item_0/text = "Details"
+popup/item_1/text = "Upgrade"
+popup/item_1/id = 1
+click_type = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 100
+
+[node name="Panel" type="Panel" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="Hungi_Bar" type="RichTextLabel" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Kbity Hungi: 0/100"
+fit_content = true
+
+[node name="Energy_Bar" type="RichTextLabel" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Kbity Energy: 0/100"
+fit_content = true
+
+[node name="Happy_Bar" type="RichTextLabel" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Kbity Happiness: 0/100"
+fit_content = true
+
+[node name="Kbity_Bux_Bar" type="RichTextLabel" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Kbity Bux: 0"
+fit_content = true
+
+[node name="Console" type="RichTextLabel" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2

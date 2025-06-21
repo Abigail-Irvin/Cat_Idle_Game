@@ -54,6 +54,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 func _on_return_pressed() -> void:
 	GlobalData.coins += coin_count
+	GlobalData.paused = false
 	get_tree().change_scene_to_file("res://scenes/maps/Main.tscn")
 	
 

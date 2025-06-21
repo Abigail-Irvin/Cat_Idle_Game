@@ -1,4 +1,9 @@
-[gd_scene format=3 uid="uid://bog2007up0peb"]
+[gd_scene load_steps=5 format=3 uid="uid://bog2007up0peb"]
+
+[ext_resource type="Script" uid="uid://dyxipl8b180kd" path="res://scenes/ui/mobile_controller.gd" id="1_5ki2t"]
+[ext_resource type="Texture2D" uid="uid://dkg2h7dr0y81v" path="res://assets/arrow.png" id="1_bi6je"]
+[ext_resource type="Texture2D" uid="uid://bvfonwic2f1qc" path="res://assets/arrow_left.png" id="1_dkdi1"]
+[ext_resource type="Texture2D" uid="uid://dn2vvixr5618q" path="res://assets/jump_button.png" id="2_5ki2t"]
 
 [node name="MobileController" type="Control"]
 layout_mode = 3
@@ -7,3 +12,52 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_5ki2t")
+
+[node name="Controller" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -201.0
+offset_right = 600.0
+offset_bottom = 201.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Controller"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Left" type="Button" parent="Controller/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+icon = ExtResource("1_dkdi1")
+flat = true
+expand_icon = true
+
+[node name="Jump" type="Button" parent="Controller/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+icon = ExtResource("2_5ki2t")
+flat = true
+expand_icon = true
+
+[node name="Right" type="Button" parent="Controller/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+icon = ExtResource("1_bi6je")
+flat = true
+expand_icon = true
+
+[connection signal="button_down" from="Controller/HBoxContainer/Left" to="." method="_on_left_button_down"]
+[connection signal="button_up" from="Controller/HBoxContainer/Left" to="." method="_on_left_button_up"]
+[connection signal="button_down" from="Controller/HBoxContainer/Jump" to="." method="_on_jump_button_down"]
+[connection signal="button_up" from="Controller/HBoxContainer/Jump" to="." method="_on_jump_button_up"]
+[connection signal="button_down" from="Controller/HBoxContainer/Right" to="." method="_on_right_button_down"]
+[connection signal="button_up" from="Controller/HBoxContainer/Right" to="." method="_on_right_button_up"]

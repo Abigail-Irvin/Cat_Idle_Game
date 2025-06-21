@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dvtjqtbrnogfr"]
+[gd_scene load_steps=10 format=3 uid="uid://dvtjqtbrnogfr"]
 
 [ext_resource type="Texture2D" uid="uid://euq327p8044c" path="res://assets/game_background.png" id="1_2iieb"]
 [ext_resource type="Script" uid="uid://bvklmqn2tjt2" path="res://scenes/maps/kbity_challenge_play.gd" id="1_bcfm2"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bg5d64t6shvjq" path="res://assets/kbity_bux.png" id="5_doi00"]
 [ext_resource type="PackedScene" uid="uid://cq8wysxwxnux6" path="res://scenes/entities/platform.tscn" id="5_mwcm1"]
 [ext_resource type="AudioStream" uid="uid://bggcjqnunqmg6" path="res://assets/Babi_Brush.mp3" id="6_doi00"]
+[ext_resource type="PackedScene" uid="uid://ds4oe8btwp7wv" path="res://scenes/entities/Pause_Menu.tscn" id="7_x8buc"]
+[ext_resource type="PackedScene" uid="uid://bog2007up0peb" path="res://scenes/ui/Mobile_Controller.tscn" id="8_t2ufs"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mwcm1"]
 distance = -1.0
@@ -170,6 +172,32 @@ text = "Return to Kbity home"
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_doi00")
 autoplay = true
+
+[node name="Main_UI" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Pause_Container" type="MarginContainer" parent="Main_UI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PauseMenu" parent="Main_UI/Pause_Container" instance=ExtResource("7_x8buc")]
+layout_mode = 2
+
+[node name="Controller_Container" type="MarginContainer" parent="Main_UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 175
+theme_override_constants/margin_bottom = 55
+
+[node name="MobileController" parent="Main_UI/Controller_Container" instance=ExtResource("8_t2ufs")]
+layout_mode = 2
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="pressed" from="Return Menu/MarginContainer/Panel/VBoxContainer/Return" to="." method="_on_return_pressed"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ds4oe8btwp7wv"]
+[gd_scene load_steps=5 format=3 uid="uid://ds4oe8btwp7wv"]
 
 [ext_resource type="Script" uid="uid://bfwtplalb0iko" path="res://scenes/entities/pause_menu.gd" id="1_jpr1o"]
 [ext_resource type="PackedScene" uid="uid://q5cd1gsv2eaa" path="res://scenes/ui/custom_option_slider.tscn" id="2_65i54"]
+[ext_resource type="Texture2D" uid="uid://koharlwm110l" path="res://assets/hamburger_menu.png" id="2_h4ctk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpr1o"]
 bg_color = Color(0.783523, 0.783523, 0.783523, 1)
@@ -35,6 +36,8 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+icon = ExtResource("2_h4ctk")
+expand_icon = true
 
 [node name="Selection" type="MarginContainer" parent="HBoxContainer"]
 visible = false

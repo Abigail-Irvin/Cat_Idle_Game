@@ -35,6 +35,7 @@ func _on_pause_pressed() -> void:
 	GlobalData.paused = true
 	if selection_ref.visible:
 		selection_ref.visible = false
+		options_ref.visible = false
 	else:
 		selection_ref.visible = true
 

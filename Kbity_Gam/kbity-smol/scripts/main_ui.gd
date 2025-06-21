@@ -87,6 +87,8 @@ func _ready() -> void:
 	update_icons()
 	
 func _process(delta: float) -> void:
+	if GlobalData.paused:
+		return
 	# pet interaction timers
 	if GlobalData.is_pet:
 		GlobalData.pet_timer += delta
@@ -217,6 +219,8 @@ func _process(delta: float) -> void:
 	kbity_bux_bar.text = "Kbity Bux: " + str(round(GlobalData.coins))
 
 func _process_input(id: int, idx: int) -> void:
+	if GlobalData.paused:
+		return
 	match id:
 		KBITY:
 			match idx:
@@ -243,6 +247,7 @@ func _process_input(id: int, idx: int) -> void:
 						console.text = "You play with kbity"
 						GlobalData.happy_level += 5
 						GlobalData.is_played = true
+						GlobalData.paused = false
 						get_tree().change_scene_to_file("res://scenes/maps/Kbity_Challenge_Play.tscn")
 					elif GlobalData.happy_level < 25:
 						console.text = "Kbity is too depressed to play, she needs care"
@@ -250,6 +255,7 @@ func _process_input(id: int, idx: int) -> void:
 					if not GlobalData.is_brushed and not is_eepy:
 						console.text = "Kbity purr, she so soft now"
 						GlobalData.is_brushed = true
+						GlobalData.paused = false
 						get_tree().change_scene_to_file("res://scenes/maps/Brush_Game.tscn")
 					if is_eepy:
 						console.text = "Kbity is just so eepy, brush when she done with nap"

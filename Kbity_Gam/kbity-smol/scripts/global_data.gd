@@ -34,6 +34,8 @@ const CONFIG_FILE_NAME = "config.json"
 func _ready() -> void:
 	verify_save_directory(GlobalData.SAVE_DIR)
 	verify_config_directory(GlobalData.CONFIG_DIR)
+	load_config(CONFIG_DIR + CONFIG_FILE_NAME)
+	load_data(SAVE_DIR + SAVE_FILE_NAME)
 	
 func verify_save_directory(path: String):
 	DirAccess.make_dir_absolute(path)
@@ -127,15 +129,15 @@ func load_data(path: String):
 		GlobalData.coins = data.player_data.coins
 		GlobalData.happy_level = data.player_data.happy_level
 		GlobalData.hungi_level = data.player_data.hungi_level
-		GlobalData.energy_level = data.player_data.energy_level
-		GlobalData.cur_toy_level = data.player_data.cur_toy_level
-		GlobalData.cur_food_level = data.player_data.cur_food_level
-		GlobalData.cur_litter_level = data.player_data.cur_litter_level
-		GlobalData.cur_bed_level = data.player_data.cur_bed_level
-		GlobalData.is_brushed = data.player_data.is_brushed
-		GlobalData.is_played = data.player_data.is_played
-		GlobalData.is_treated = data.player_data.is_treated
-		GlobalData.is_pet = data.player_data.is_pet
+		GlobalData.energy_level = int(data.player_data.energy_level)
+		GlobalData.cur_toy_level = int(data.player_data.cur_toy_level)
+		GlobalData.cur_food_level = int(data.player_data.cur_food_level)
+		GlobalData.cur_litter_level = int(data.player_data.cur_litter_level)
+		GlobalData.cur_bed_level = int(data.player_data.cur_bed_level)
+		GlobalData.is_brushed = bool(data.player_data.is_brushed)
+		GlobalData.is_played = bool(data.player_data.is_played)
+		GlobalData.is_treated = bool(data.player_data.is_treated)
+		GlobalData.is_pet = bool(data.player_data.is_pet)
 		GlobalData.play_timer = data.player_data.play_timer
 		GlobalData.brush_timer = data.player_data.brush_timer
 		GlobalData.treat_timer = data.player_data.treat_timer

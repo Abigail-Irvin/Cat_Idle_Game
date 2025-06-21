@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://csq8b2wv8aqau"]
+[gd_scene load_steps=9 format=3 uid="uid://csq8b2wv8aqau"]
 
 [ext_resource type="Script" uid="uid://cnmtmig4wfqhh" path="res://scripts/main_ui.gd" id="1_hcnxy"]
 [ext_resource type="PackedScene" uid="uid://qsbbh3831kmf" path="res://scenes/ui/Dropdown_Button.tscn" id="1_hnesk"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bihiafxegvvu1" path="res://assets/0_bed.png" id="5_oxwcw"]
 [ext_resource type="Texture2D" uid="uid://120hx1lv1c2d" path="res://assets/0_toy.png" id="6_yc0ux"]
 [ext_resource type="Texture2D" uid="uid://cn210p0lqd5yb" path="res://assets/0_litter.png" id="8_b65ll"]
+[ext_resource type="PackedScene" uid="uid://ds4oe8btwp7wv" path="res://scenes/entities/Pause_Menu.tscn" id="8_oxwcw"]
 
 [node name="MainUi" type="Control" node_paths=PackedStringArray("kbity_ref", "bed_ref", "food_ref", "toy_ref", "litter_ref", "happy_bar", "hungi_bar", "energy_bar", "kbity_bux_bar", "console")]
 layout_mode = 3
@@ -186,4 +187,12 @@ fit_content = true
 
 [node name="Console" type="RichTextLabel" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PauseMenu" parent="MarginContainer" instance=ExtResource("8_oxwcw")]
 layout_mode = 2

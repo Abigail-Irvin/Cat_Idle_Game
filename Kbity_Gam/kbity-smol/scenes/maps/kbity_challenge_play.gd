@@ -9,6 +9,7 @@ var platform_array: Array
 @export var end_coin_text: RichTextLabel
 @export var return_menu: CanvasLayer
 @export var player_ref: Node2D
+@export var tutorial: Control
 var energy_drain = 0.75
 var difficulty_scaling: float = 0.1
 var counter: float = 10
@@ -16,6 +17,9 @@ var max_speed: float = 40
 var game_over = false
 
 func _ready():
+	if not GlobalData.nag_toggle_platform:
+		tutorial.visible = false
+		GlobalData.paused = false
 	coin_ref.text = "Kbity-Bux gained: " + str(coin_count)
 	var node = self.get_child(2)
 	platform_array = node.get_children()
@@ -45,7 +49,7 @@ func _on_coin_body_entered(body: Node2D) -> void:
 		if GlobalData.happy_level <= 100:
 			coin_count += 1
 		elif GlobalData.happy_level > 100:
-			coin_count += ceil(1 * (GlobalData.happy_level / 100))
+			coin_count += ceil(1 * (GlobalData.cur_toy_level + 1))
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "Player":

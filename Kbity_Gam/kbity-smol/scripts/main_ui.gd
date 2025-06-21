@@ -21,12 +21,13 @@ extends Control
 @export var bed_cost_list: Array
 @export var food_cost_list: Array
 @export var litter_cost_list: Array
-@export var max_level: int
 
 @export var kbity_awake_img: String
 @export var kbity_eepy_img: String
 
 @export var console: RichTextLabel
+
+@export var tutorial: Control
 
 var pet_cooldown = 5
 var treat_cooldown = 15
@@ -74,12 +75,15 @@ var toy_dict = {}
 var litter_dict = {}
 
 func _ready() -> void:
+	if not GlobalData.nag_toggle_main:
+		tutorial.visible = false
+		GlobalData.paused = false
 	kbity_ref.popup_menu_selection.connect(self._process_input)
 	bed_ref.popup_menu_selection.connect(self._process_input)
 	food_ref.popup_menu_selection.connect(self._process_input)
 	toy_ref.popup_menu_selection.connect(self._process_input)
 	litter_ref.popup_menu_selection.connect(self._process_input)
-	for i in range(max_level):
+	for i in range(len(bed_desc_list)):
 		bed_dict[i] = ItemData.new(i, bed_desc_list[i], bed_cost_list[i], bed_img_list[i])
 		food_dict[i] = ItemData.new(i, food_desc_list[i], food_cost_list[i], food_img_list[i])
 		litter_dict[i] = ItemData.new(i, litter_desc_list[i], litter_cost_list[i], litter_img_list[i])
@@ -89,6 +93,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if GlobalData.paused:
 		return
+	
+	update_icons()
 	# pet interaction timers
 	if GlobalData.is_pet:
 		GlobalData.pet_timer += delta
@@ -146,17 +152,14 @@ func _process(delta: float) -> void:
 		if not is_eat:
 			is_eat = true
 			console.text = "kbity just needs nibl"
-	elif GlobalData.hungi_level > 100:
-		GlobalData.hungi_level = 100
-		
+	
 	if is_eat and not is_eepy:
 		eat_timer += delta
 		if GlobalData.hungi_level <= 100:
 			GlobalData.hungi_level += delta * ((GlobalData.cur_food_level + 1) * eating_scaling_factor)
 		else:
 			GlobalData.hungi_level = 100
-		if eat_timer >= eating_cooldown or GlobalData.hungi_level >= 100:
-			GlobalData.hungi_level = 100
+		if eat_timer >= eating_cooldown:
 			is_eat = false
 			eat_timer = 0
 				
@@ -210,6 +213,11 @@ func _process(delta: float) -> void:
 			GlobalData.happy_level = 0
 	else:
 		GlobalData.happy_level += delta
+		
+	if GlobalData.hungi_level > 100:
+		GlobalData.hungi_level = 100
+	if GlobalData.energy_level > 100:
+		GlobalData.energy_level = 100
 		
 	# Final Graphics Updates:
 	
@@ -265,7 +273,7 @@ func _process_input(id: int, idx: int) -> void:
 				DETAILS:
 					console.text = toy.desc
 				UPGRADE:
-					if GlobalData.cur_toy_level + 1 < max_level and GlobalData.coins >= toy.cost:
+					if GlobalData.cur_toy_level + 1 < len(toy_cost_list) - 1 and GlobalData.coins >= toy.cost:
 						GlobalData.cur_toy_level += 1
 						GlobalData.coins -= toy.cost
 						update_icons()
@@ -275,7 +283,7 @@ func _process_input(id: int, idx: int) -> void:
 				DETAILS:
 					console.text = bed.desc
 				UPGRADE:
-					if GlobalData.cur_bed_level + 1 < max_level and GlobalData.coins >= bed.cost:
+					if GlobalData.cur_bed_level + 1 < len(bed_cost_list) - 1 and GlobalData.coins >= bed.cost:
 						GlobalData.cur_bed_level += 1
 						GlobalData.coins -= bed.cost
 						update_icons()
@@ -285,7 +293,7 @@ func _process_input(id: int, idx: int) -> void:
 				DETAILS:
 					console.text = food.desc
 				UPGRADE:
-					if GlobalData.cur_food_level + 1 < max_level and GlobalData.coins >= food.cost:
+					if GlobalData.cur_food_level + 1 < len(food_cost_list) - 1 and GlobalData.coins >= food.cost:
 						GlobalData.cur_food_level += 1
 						GlobalData.coins -= food.cost
 						update_icons()
@@ -295,7 +303,7 @@ func _process_input(id: int, idx: int) -> void:
 				DETAILS:
 					console.text = litter.desc
 				UPGRADE:
-					if GlobalData.cur_litter_level + 1 < max_level and GlobalData.coins >= litter.cost:
+					if GlobalData.cur_litter_level + 1 < len(litter_cost_list) - 1 and GlobalData.coins >= litter.cost:
 						GlobalData.cur_litter_level += 1
 						GlobalData.coins -= litter.cost
 						update_icons()
@@ -305,22 +313,22 @@ func update_icons():
 	var bed = bed_dict[GlobalData.cur_bed_level]
 	var food = food_dict[GlobalData.cur_food_level]
 	var litter = litter_dict[GlobalData.cur_litter_level]
-	if GlobalData.cur_toy_level == max_level:
+	if GlobalData.cur_toy_level == len(toy_cost_list) - 1:
 		toy_ref.get_popup().set_item_text(1, "Max Upgrade Reached")
 	else:
 		toy_ref.get_popup().set_item_text(1, "Upgrade: " + str(toy.cost))
 		
-	if GlobalData.cur_bed_level == max_level:
+	if GlobalData.cur_bed_level == len(bed_cost_list) - 1:
 		bed_ref.get_popup().set_item_text(1, "Max Upgrade Reached")
 	else:
 		bed_ref.get_popup().set_item_text(1, "Upgrade: " + str(bed.cost))
 		
-	if GlobalData.cur_food_level == max_level:
+	if GlobalData.cur_food_level == len(food_cost_list) - 1:
 		food_ref.get_popup().set_item_text(1, "Max Upgrade Reached")
 	else:
 		food_ref.get_popup().set_item_text(1, "Upgrade: " + str(food.cost))
 		
-	if GlobalData.cur_litter_level == max_level:
+	if GlobalData.cur_litter_level == len(litter_cost_list) - 1:
 		litter_ref.get_popup().set_item_text(1, "Max Upgrade Reached")
 	else:
 		litter_ref.get_popup().set_item_text(1, "Upgrade: " + str(litter.cost))

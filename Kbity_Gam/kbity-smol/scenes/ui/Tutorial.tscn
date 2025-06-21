@@ -1,12 +1,20 @@
-[gd_scene format=3 uid="uid://edoi60vpdnr6"]
+[gd_scene load_steps=2 format=3 uid="uid://edoi60vpdnr6"]
 
-[node name="Tutorial" type="Control"]
+[ext_resource type="Script" uid="uid://cysbd2365mdhb" path="res://scenes/ui/tutorial.gd" id="1_t1507"]
+
+[node name="Tutorial" type="Control" node_paths=PackedStringArray("nag_check", "main_text", "title_text")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_t1507")
+nag_check = NodePath("MarginContainer/Panel/VBoxContainer/NagBox/Nag_Button")
+main_text = NodePath("MarginContainer/Panel/VBoxContainer/MarginContainer/BlahText")
+title_text = NodePath("MarginContainer/Panel/VBoxContainer/Name")
+title = "test"
+filler = "test"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -38,8 +46,17 @@ grow_vertical = 2
 [node name="Name" type="RichTextLabel" parent="MarginContainer/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 35
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="BlahText" type="RichTextLabel" parent="MarginContainer/Panel/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="BlahText" type="RichTextLabel" parent="MarginContainer/Panel/VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 text = "There"
@@ -49,17 +66,17 @@ layout_mode = 2
 size_flags_vertical = 10
 theme_override_constants/margin_left = 150
 
-[node name="CheckBox" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/NagBox"]
+[node name="Nag_Button" type="CheckBox" parent="MarginContainer/Panel/VBoxContainer/NagBox"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel/VBoxContainer/NagBox/CheckBox"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel/VBoxContainer/NagBox/Nag_Button"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/margin_left = 23
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="MarginContainer/Panel/VBoxContainer/NagBox/CheckBox/MarginContainer"]
+[node name="RichTextLabel3" type="RichTextLabel" parent="MarginContainer/Panel/VBoxContainer/NagBox/Nag_Button/MarginContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "Don't remind me again"
@@ -72,6 +89,9 @@ size_flags_vertical = 10
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/VBoxContainer/Continue"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/Panel/VBoxContainer/Continue/HBoxContainer"]
+[node name="Resume" type="Button" parent="MarginContainer/Panel/VBoxContainer/Continue/HBoxContainer"]
 layout_mode = 2
 text = "Ready!"
+
+[connection signal="pressed" from="MarginContainer/Panel/VBoxContainer/NagBox/Nag_Button" to="." method="_on_nag_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/VBoxContainer/Continue/HBoxContainer/Resume" to="." method="_on_resume_pressed"]

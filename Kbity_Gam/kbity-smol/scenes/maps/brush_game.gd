@@ -3,11 +3,15 @@ extends Node2D
 @export var brush_ref: Node2D
 @export var return_menu: CanvasLayer
 @export var happy_obtained: RichTextLabel
+@export var tutorial: Control
 var dust_array: Array
 var clean_total: int
 var cur_clean: int = 0
 
 func _ready() -> void:
+	if not GlobalData.nag_toggle_brush:
+		tutorial.visible = false
+		GlobalData.paused = false
 	dust_array = dust_group.get_children()
 	clean_total = len(dust_array)
 	

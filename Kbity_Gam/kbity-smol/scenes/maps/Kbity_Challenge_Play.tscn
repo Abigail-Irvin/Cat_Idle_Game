@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dvtjqtbrnogfr"]
+[gd_scene load_steps=11 format=3 uid="uid://dvtjqtbrnogfr"]
 
 [ext_resource type="Texture2D" uid="uid://euq327p8044c" path="res://assets/game_background.png" id="1_2iieb"]
 [ext_resource type="Script" uid="uid://bvklmqn2tjt2" path="res://scenes/maps/kbity_challenge_play.gd" id="1_bcfm2"]
@@ -8,11 +8,12 @@
 [ext_resource type="AudioStream" uid="uid://bggcjqnunqmg6" path="res://assets/Babi_Brush.mp3" id="6_doi00"]
 [ext_resource type="PackedScene" uid="uid://ds4oe8btwp7wv" path="res://scenes/entities/Pause_Menu.tscn" id="7_x8buc"]
 [ext_resource type="PackedScene" uid="uid://bog2007up0peb" path="res://scenes/ui/Mobile_Controller.tscn" id="8_t2ufs"]
+[ext_resource type="PackedScene" uid="uid://edoi60vpdnr6" path="res://scenes/ui/Tutorial.tscn" id="9_t2ufs"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mwcm1"]
 distance = -1.0
 
-[node name="KbityChallengePlay" type="Node2D" node_paths=PackedStringArray("coin_ref", "energy_ref", "right_point", "left_point", "end_coin_text", "return_menu", "player_ref")]
+[node name="KbityChallengePlay" type="Node2D" node_paths=PackedStringArray("coin_ref", "energy_ref", "right_point", "left_point", "end_coin_text", "return_menu", "player_ref", "tutorial")]
 y_sort_enabled = true
 script = ExtResource("1_bcfm2")
 coin_ref = NodePath("CanvasLayer2/MarginContainer/VBoxContainer/HBoxContainer/Coin text")
@@ -22,6 +23,7 @@ left_point = NodePath("Left Point")
 end_coin_text = NodePath("Return Menu/MarginContainer/Panel/VBoxContainer/Coins")
 return_menu = NodePath("Return Menu")
 player_ref = NodePath("Player")
+tutorial = NodePath("Main_UI/Tutorial")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -5
@@ -198,6 +200,11 @@ theme_override_constants/margin_bottom = 55
 
 [node name="MobileController" parent="Main_UI/Controller_Container" instance=ExtResource("8_t2ufs")]
 layout_mode = 2
+
+[node name="Tutorial" parent="Main_UI" instance=ExtResource("9_t2ufs")]
+nag_selection = 1
+title = "Platformer Challenge"
+filler = "The platform challenge is a game that kbity loves playing. Don't worry if she falls, there is a soft cushion to catch her! The controls for the game are A/D or left/right arrows. The jump button / Space for jumping. Kbity's happiness will boost her movement by a percentage if over 100, beware happiness under 100 will have a negative effect on speed. The level of the food bowl will determine how slowly her energy depletes in exercise, and lastly the level of the toy will determine coin output, providing better bonuses at higher levels! Good luck and have fun! =3"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="pressed" from="Return Menu/MarginContainer/Panel/VBoxContainer/Return" to="." method="_on_return_pressed"]

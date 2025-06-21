@@ -7,7 +7,6 @@ extends Control
 @export var sfx_ref: HBoxContainer
 
 func _ready() -> void:
-	GlobalData.load_config(GlobalData.CONFIG_DIR + GlobalData.CONFIG_FILE_NAME)
 	master_ref.slider_value = GlobalData.master_volume
 	music_ref.slider_value = GlobalData.music_volume
 	sfx_ref.slider_value = GlobalData.sfx_volume
@@ -28,7 +27,7 @@ func _on_save_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	_on_save_pressed()
-	get_tree().quit()
+	get_tree().change_scene_to_file("res://scenes/maps/title_map.tscn")
 
 
 func _on_pause_pressed() -> void:

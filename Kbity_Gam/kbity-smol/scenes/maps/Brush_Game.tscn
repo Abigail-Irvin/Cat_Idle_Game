@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8iu65uxcta73"]
+[gd_scene load_steps=9 format=3 uid="uid://b8iu65uxcta73"]
 
 [ext_resource type="Script" uid="uid://cpqg3qkw4cvck" path="res://scenes/maps/brush_game.gd" id="1_poqmm"]
 [ext_resource type="Texture2D" uid="uid://euq327p8044c" path="res://assets/game_background.png" id="1_xqwea"]
@@ -7,13 +7,15 @@
 [ext_resource type="PackedScene" uid="uid://fk7w0hm584ku" path="res://scenes/entities/dust_bunny.tscn" id="4_xjwps"]
 [ext_resource type="AudioStream" uid="uid://bggcjqnunqmg6" path="res://assets/Babi_Brush.mp3" id="6_omhgr"]
 [ext_resource type="PackedScene" uid="uid://ds4oe8btwp7wv" path="res://scenes/entities/Pause_Menu.tscn" id="7_fiuex"]
+[ext_resource type="PackedScene" uid="uid://edoi60vpdnr6" path="res://scenes/ui/Tutorial.tscn" id="8_w4sji"]
 
-[node name="BrushGame" type="Node2D" node_paths=PackedStringArray("dust_group", "brush_ref", "return_menu", "happy_obtained")]
+[node name="BrushGame" type="Node2D" node_paths=PackedStringArray("dust_group", "brush_ref", "return_menu", "happy_obtained", "tutorial")]
 script = ExtResource("1_poqmm")
 dust_group = NodePath("Dust Group")
 brush_ref = NodePath("Brush")
 return_menu = NodePath("Return Menu")
 happy_obtained = NodePath("Return Menu/MarginContainer/Panel/VBoxContainer/Happi")
+tutorial = NodePath("Pause/Tutorial")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -114,5 +116,10 @@ offset_bottom = 40.0
 
 [node name="PauseMenu" parent="Pause/MarginContainer" instance=ExtResource("7_fiuex")]
 layout_mode = 2
+
+[node name="Tutorial" parent="Pause" instance=ExtResource("8_w4sji")]
+nag_selection = 2
+title = "Brushing Kbity"
+filler = "You get the brush the little kbity to make her fur soft and fluffy. To brush cat, just run the brush over the knotted fur patches, being sure to brush over the same spot a few times to make sure it's cleaned up. Once all the fur is properly brushed kbity will be super happy!"
 
 [connection signal="pressed" from="Return Menu/MarginContainer/Panel/VBoxContainer/Return" to="." method="_on_return_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://csq8b2wv8aqau"]
+[gd_scene load_steps=10 format=3 uid="uid://csq8b2wv8aqau"]
 
 [ext_resource type="Script" uid="uid://cnmtmig4wfqhh" path="res://scripts/main_ui.gd" id="1_hcnxy"]
 [ext_resource type="PackedScene" uid="uid://qsbbh3831kmf" path="res://scenes/ui/Dropdown_Button.tscn" id="1_hnesk"]
@@ -8,8 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://120hx1lv1c2d" path="res://assets/0_toy.png" id="6_yc0ux"]
 [ext_resource type="Texture2D" uid="uid://cn210p0lqd5yb" path="res://assets/0_litter.png" id="8_b65ll"]
 [ext_resource type="PackedScene" uid="uid://ds4oe8btwp7wv" path="res://scenes/entities/Pause_Menu.tscn" id="8_oxwcw"]
+[ext_resource type="PackedScene" uid="uid://edoi60vpdnr6" path="res://scenes/ui/Tutorial.tscn" id="8_yc0ux"]
 
-[node name="MainUi" type="Control" node_paths=PackedStringArray("kbity_ref", "bed_ref", "food_ref", "toy_ref", "litter_ref", "happy_bar", "hungi_bar", "energy_bar", "kbity_bux_bar", "console")]
+[node name="MainUi" type="Control" node_paths=PackedStringArray("kbity_ref", "bed_ref", "food_ref", "toy_ref", "litter_ref", "happy_bar", "hungi_bar", "energy_bar", "kbity_bux_bar", "console", "tutorial")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,10 +39,10 @@ toy_cost_list = [5, 10, 15, 20, 25]
 bed_cost_list = [6, 12, 24, 48, 96]
 food_cost_list = [5, 10, 15, 20, 25]
 litter_cost_list = [5, 10, 15, 20, 25]
-max_level = 5
 kbity_awake_img = "res://assets/babi.png"
 kbity_eepy_img = "res://assets/babi_eepy.png"
 console = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Console")
+tutorial = NodePath("Panel/Tutorial")
 
 [node name="Panel" type="TextureRect" parent="."]
 layout_mode = 1
@@ -188,6 +189,11 @@ fit_content = true
 [node name="Console" type="RichTextLabel" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+
+[node name="Tutorial" parent="Panel" instance=ExtResource("8_yc0ux")]
+layout_mode = 1
+title = "Welcome to Kbity Game"
+filler = "Welcome to the happy little cozy cove of the Kbity. You rescued the little smol recently, and although you don't have many things, you cobble together what you can for your new found friend. Kbity is a sweet cat, and she loves playing games, to play with Kbity, you'll need to make sure she isn't currently asleep or busy eating, and that her happiness is at least 25%, lest she be too sad to play. To help make kbity happy, you can do a few of the following: upgrade furniture and toys, as the current level of all furniture will contribute to a base happiness. Interacting with kbity will increase her happiness, petting increases happiness by 10%, brushing by 20%, and treats by 5%. Playing with kbity is the primary way to generate Kbity-bux, which are used in upgrading her furniture, the higher the toy level, the better multiplier on coins you will get in the minigame. The higher kbity's happiness is, the faster she will also be in the minigame. Hope you enjoy this smol game, about a very smol kbity! :3"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0

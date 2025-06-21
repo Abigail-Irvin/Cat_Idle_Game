@@ -1,12 +1,12 @@
 extends Node
-var coins = 0
-var happy_level: float = 0
-var hungi_level: float = 0
-var energy_level: float = 5
-var cur_toy_level = 0
-var cur_food_level = 0
-var cur_litter_level = 0
-var cur_bed_level = 0
+var coins = 9999
+var happy_level: float = 100
+var hungi_level: float = 100
+var energy_level: float = 100
+var cur_toy_level = 4
+var cur_food_level = 4
+var cur_litter_level = 4
+var cur_bed_level = 4
 var is_brushed = false
 var is_played = false
 var is_treated = false
@@ -24,6 +24,11 @@ var master_volume = 100
 var music_volume = 100
 var sfx_volume = 100
 
+var fresh_game = true
+var nag_toggle_brush = true
+var nag_toggle_main = true
+var nag_toggle_platform = true
+
 const SAVE_DIR = "user://saves/"
 const SAVE_FILE_NAME = "kbity_save.json"
 const SECURITY_KEY = "8675309"
@@ -34,8 +39,6 @@ const CONFIG_FILE_NAME = "config.json"
 func _ready() -> void:
 	verify_save_directory(GlobalData.SAVE_DIR)
 	verify_config_directory(GlobalData.CONFIG_DIR)
-	load_config(CONFIG_DIR + CONFIG_FILE_NAME)
-	load_data(SAVE_DIR + SAVE_FILE_NAME)
 	
 func verify_save_directory(path: String):
 	DirAccess.make_dir_absolute(path)
@@ -53,7 +56,10 @@ func save_config(path: String):
 		"config_data": {
 			"master_volume": GlobalData.master_volume,
 			"music_volume": GlobalData.music_volume,
-			"sfx_volume": GlobalData.sfx_volume
+			"sfx_volume": GlobalData.sfx_volume,
+			"nag_toggle_main": GlobalData.nag_toggle_main,
+			"nag_toggle_brush": GlobalData.nag_toggle_brush,
+			"nag_toggle_platform": GlobalData.nag_toggle_platform
 		}
 	}
 	var json_string = JSON.stringify(data, "\t")
@@ -61,6 +67,7 @@ func save_config(path: String):
 	file.close()
 
 func load_config(path: String):
+	print("wtf")
 	if FileAccess.file_exists(path):
 		var file = FileAccess.open(path, FileAccess.READ)
 		if file == null:
@@ -77,6 +84,9 @@ func load_config(path: String):
 		GlobalData.master_volume = data.config_data.master_volume
 		GlobalData.music_volume = data.config_data.music_volume
 		GlobalData.sfx_volume = data.config_data.sfx_volume
+		GlobalData.nag_toggle_brush = bool(data.config_data.nag_toggle_brush)
+		GlobalData.nag_toggle_platform = bool(data.config_data.nag_toggle_platform)
+		GlobalData.nag_toggle_main = bool(data.config_data.nag_toggle_platform)
 		
 	else:
 		print("No config found, loading up default values.")

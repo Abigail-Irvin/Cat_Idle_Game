@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Kbity-Smol"
-run/main_scene="uid://d7a5hf1j5sge"
+run/main_scene="uid://c5pvd3pc6nxbb"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://assets/icon.svg"
 

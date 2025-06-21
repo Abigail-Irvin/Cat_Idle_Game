@@ -13,7 +13,7 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mwcm1"]
 distance = -1.0
 
-[node name="KbityChallengePlay" type="Node2D" node_paths=PackedStringArray("coin_ref", "energy_ref", "right_point", "left_point", "end_coin_text", "return_menu", "player_ref", "tutorial")]
+[node name="KbityChallengePlay" type="Node2D" node_paths=PackedStringArray("coin_ref", "energy_ref", "right_point", "left_point", "end_coin_text", "return_menu", "player_ref", "tutorial", "music_player")]
 y_sort_enabled = true
 script = ExtResource("1_bcfm2")
 coin_ref = NodePath("CanvasLayer2/MarginContainer/VBoxContainer/HBoxContainer/Coin text")
@@ -24,6 +24,7 @@ end_coin_text = NodePath("Return Menu/MarginContainer/Panel/VBoxContainer/Coins"
 return_menu = NodePath("Return Menu")
 player_ref = NodePath("Player")
 tutorial = NodePath("Main_UI/Tutorial")
+music_player = NodePath("AudioStreamPlayer2D")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -5
@@ -174,6 +175,7 @@ text = "Return to Kbity home"
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_doi00")
 autoplay = true
+bus = &"Music"
 
 [node name="Main_UI" type="CanvasLayer" parent="."]
 layer = 5

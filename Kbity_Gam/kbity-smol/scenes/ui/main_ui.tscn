@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://csq8b2wv8aqau"]
+[gd_scene load_steps=13 format=3 uid="uid://csq8b2wv8aqau"]
 
 [ext_resource type="Script" uid="uid://cnmtmig4wfqhh" path="res://scripts/main_ui.gd" id="1_hcnxy"]
 [ext_resource type="PackedScene" uid="uid://qsbbh3831kmf" path="res://scenes/ui/Dropdown_Button.tscn" id="1_hnesk"]
@@ -9,8 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://cn210p0lqd5yb" path="res://assets/0_litter.png" id="8_b65ll"]
 [ext_resource type="PackedScene" uid="uid://ds4oe8btwp7wv" path="res://scenes/entities/Pause_Menu.tscn" id="8_oxwcw"]
 [ext_resource type="PackedScene" uid="uid://edoi60vpdnr6" path="res://scenes/ui/Tutorial.tscn" id="8_yc0ux"]
+[ext_resource type="AudioStream" uid="uid://c5pljx2nggh0k" path="res://assets/happy_chirp.mp3" id="10_aa6wj"]
+[ext_resource type="AudioStream" uid="uid://gn7ch68iblgb" path="res://assets/meow.mp3" id="11_m82f4"]
+[ext_resource type="AudioStream" uid="uid://5xapu8hyipku" path="res://assets/mow.mp3" id="12_8s2gp"]
 
-[node name="MainUi" type="Control" node_paths=PackedStringArray("kbity_ref", "bed_ref", "food_ref", "toy_ref", "litter_ref", "happy_bar", "hungi_bar", "energy_bar", "kbity_bux_bar", "console", "tutorial")]
+[node name="MainUi" type="Control" node_paths=PackedStringArray("kbity_ref", "bed_ref", "food_ref", "toy_ref", "litter_ref", "happy_bar", "hungi_bar", "energy_bar", "kbity_bux_bar", "console", "tutorial", "mow_ref", "meow_ref", "chirp_ref")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,6 +46,9 @@ kbity_awake_img = "res://assets/babi.png"
 kbity_eepy_img = "res://assets/babi_eepy.png"
 console = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Console")
 tutorial = NodePath("Panel/Tutorial")
+mow_ref = NodePath("mow")
+meow_ref = NodePath("meow")
+chirp_ref = NodePath("chirp")
 
 [node name="Panel" type="TextureRect" parent="."]
 layout_mode = 1
@@ -202,3 +208,15 @@ offset_bottom = 40.0
 
 [node name="PauseMenu" parent="MarginContainer" instance=ExtResource("8_oxwcw")]
 layout_mode = 2
+
+[node name="chirp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_aa6wj")
+bus = &"Sfx"
+
+[node name="meow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_m82f4")
+bus = &"Sfx"
+
+[node name="mow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_8s2gp")
+bus = &"Sfx"

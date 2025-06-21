@@ -10,6 +10,7 @@ var platform_array: Array
 @export var return_menu: CanvasLayer
 @export var player_ref: Node2D
 @export var tutorial: Control
+@export var music_player: AudioStreamPlayer2D
 var energy_drain = 0.75
 var difficulty_scaling: float = 0.1
 var counter: float = 10

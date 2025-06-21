@@ -29,6 +29,10 @@ extends Control
 
 @export var tutorial: Control
 
+@export var mow_ref: AudioStreamPlayer2D
+@export var meow_ref: AudioStreamPlayer2D
+@export var chirp_ref: AudioStreamPlayer2D
+
 var pet_cooldown = 5
 var treat_cooldown = 15
 var play_cooldown = 10
@@ -73,8 +77,15 @@ var bed_dict = {}
 var food_dict = {}
 var toy_dict = {}
 var litter_dict = {}
-
+var methods = []
+	
 func _ready() -> void:
+	randomize()
+	methods = [
+		meow_ref.play,
+		chirp_ref.play,
+		mow_ref.play
+	]
 	if not GlobalData.nag_toggle_main:
 		tutorial.visible = false
 		GlobalData.paused = false
@@ -167,6 +178,7 @@ func _process(delta: float) -> void:
 		if not is_mood:
 			console.text = "baby kbity is so sad, she just cri"
 			is_mood = true
+			methods.pick_random().call()
 		else:
 			mood_timer += delta
 			if mood_timer >= mood_cooldown:
@@ -177,6 +189,7 @@ func _process(delta: float) -> void:
 		if not is_mood:
 			console.text = "baby kbity is so happy she purrs and plays with her favorite toy mouse"
 			is_mood = true
+			methods.pick_random().call()
 		else:
 			mood_timer += delta
 			if mood_timer >= mood_cooldown:
@@ -188,6 +201,7 @@ func _process(delta: float) -> void:
 		if not is_mood:
 			console.text = "baby kbity feels so content, she appreciates your gentle care"
 			is_mood = true
+			methods.pick_random().call()
 		else:
 			mood_timer += delta
 			if mood_timer >= mood_cooldown:

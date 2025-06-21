@@ -15,6 +15,8 @@ func _on_resume_pressed() -> void:
 	GlobalData.paused = false
 	selection_ref.visible = false
 	options_ref.visible = false
+	selection_ref.release_focus()
+	options_ref.release_focus()
 
 
 func _on_options_pressed() -> void:
@@ -35,12 +37,16 @@ func _on_pause_pressed() -> void:
 	if selection_ref.visible:
 		selection_ref.visible = false
 		options_ref.visible = false
+		GlobalData.paused = false
+		selection_ref.release_focus()
+		options_ref.release_focus()
 	else:
 		selection_ref.visible = true
 
 
 func _on_close_pressed() -> void:
 	options_ref.visible = false
+	options_ref.release_focus()
 	GlobalData.save_config(GlobalData.CONFIG_DIR + GlobalData.CONFIG_FILE_NAME)
 	
 func _process(delta: float) -> void:

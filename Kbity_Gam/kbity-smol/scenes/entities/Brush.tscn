@@ -21,6 +21,7 @@ shape = SubResource("CircleShape2D_3ldc3")
 
 [node name="Brush_Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_24wjh")
+bus = &"Sfx"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

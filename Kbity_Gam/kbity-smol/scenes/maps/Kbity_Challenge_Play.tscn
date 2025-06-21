@@ -1,0 +1,175 @@
+[gd_scene load_steps=8 format=3 uid="uid://dvtjqtbrnogfr"]
+
+[ext_resource type="Texture2D" uid="uid://euq327p8044c" path="res://assets/game_background.png" id="1_2iieb"]
+[ext_resource type="Script" uid="uid://bvklmqn2tjt2" path="res://scenes/maps/kbity_challenge_play.gd" id="1_bcfm2"]
+[ext_resource type="PackedScene" uid="uid://bjslr7i3wm2ye" path="res://scenes/entities/player.tscn" id="2_va40u"]
+[ext_resource type="Texture2D" uid="uid://bg5d64t6shvjq" path="res://assets/kbity_bux.png" id="5_doi00"]
+[ext_resource type="PackedScene" uid="uid://cq8wysxwxnux6" path="res://scenes/entities/platform.tscn" id="5_mwcm1"]
+[ext_resource type="AudioStream" uid="uid://bggcjqnunqmg6" path="res://assets/Babi_Brush.mp3" id="6_doi00"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mwcm1"]
+distance = -1.0
+
+[node name="KbityChallengePlay" type="Node2D" node_paths=PackedStringArray("coin_ref", "energy_ref", "right_point", "left_point", "end_coin_text", "return_menu", "player_ref")]
+y_sort_enabled = true
+script = ExtResource("1_bcfm2")
+coin_ref = NodePath("CanvasLayer2/MarginContainer/VBoxContainer/HBoxContainer/Coin text")
+energy_ref = NodePath("CanvasLayer2/MarginContainer/VBoxContainer/Energy")
+right_point = NodePath("Right Point")
+left_point = NodePath("Left Point")
+end_coin_text = NodePath("Return Menu/MarginContainer/Panel/VBoxContainer/Coins")
+return_menu = NodePath("Return Menu")
+player_ref = NodePath("Player")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -5
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2iieb")
+expand_mode = 5
+
+[node name="Player" parent="." instance=ExtResource("2_va40u")]
+z_index = 1
+position = Vector2(137, 760)
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform" parent="Platforms" node_paths=PackedStringArray("commander_ref") instance=ExtResource("5_mwcm1")]
+position = Vector2(55, 997)
+commander_ref = NodePath("../..")
+
+[node name="Platform3" parent="Platforms" node_paths=PackedStringArray("commander_ref") instance=ExtResource("5_mwcm1")]
+position = Vector2(538, 850)
+commander_ref = NodePath("../..")
+
+[node name="Platform4" parent="Platforms" node_paths=PackedStringArray("commander_ref") instance=ExtResource("5_mwcm1")]
+position = Vector2(739, 997)
+commander_ref = NodePath("../..")
+
+[node name="Platform5" parent="Platforms" node_paths=PackedStringArray("commander_ref") instance=ExtResource("5_mwcm1")]
+position = Vector2(355, 1000)
+commander_ref = NodePath("../..")
+
+[node name="Platform6" parent="Platforms" node_paths=PackedStringArray("commander_ref") instance=ExtResource("5_mwcm1")]
+position = Vector2(1429, 654)
+commander_ref = NodePath("../..")
+
+[node name="Platform7" parent="Platforms" node_paths=PackedStringArray("commander_ref") instance=ExtResource("5_mwcm1")]
+position = Vector2(960, 567)
+commander_ref = NodePath("../..")
+
+[node name="Platform8" parent="Platforms" node_paths=PackedStringArray("commander_ref") instance=ExtResource("5_mwcm1")]
+position = Vector2(-305, 757)
+commander_ref = NodePath("../..")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 200.0
+grow_vertical = 0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/MarginContainer"]
+layout_mode = 2
+
+[node name="Energy" type="RichTextLabel" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Kbity Energy: 100"
+fit_content = true
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("5_doi00")
+expand_mode = 2
+
+[node name="Coin text" type="RichTextLabel" parent="CanvasLayer2/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Kbity-bux: 0"
+vertical_alignment = 1
+
+[node name="Right Point" type="Sprite2D" parent="."]
+position = Vector2(1023, 992)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("5_doi00")
+
+[node name="Left Point" type="Sprite2D" parent="."]
+position = Vector2(-264, 812)
+scale = Vector2(0.0676935, 0.0654478)
+texture = ExtResource("5_doi00")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(5, 1282)
+shape = SubResource("WorldBoundaryShape2D_mwcm1")
+
+[node name="Return Menu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="Return Menu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Return Menu/MarginContainer"]
+custom_minimum_size = Vector2(300, 110)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Return Menu/MarginContainer/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Game_End" type="RichTextLabel" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "Playtime complete! ^w^"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Coins" type="RichTextLabel" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Coins obtained: "
+fit_content = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Cuteness: Infinite"
+fit_content = true
+
+[node name="Return" type="Button" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Return to Kbity home"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_doi00")
+autoplay = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="pressed" from="Return Menu/MarginContainer/Panel/VBoxContainer/Return" to="." method="_on_return_pressed"]

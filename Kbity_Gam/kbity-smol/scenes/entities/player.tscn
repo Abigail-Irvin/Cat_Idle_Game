@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjslr7i3wm2ye"]
+
+[ext_resource type="Script" uid="uid://hnvboacbtl5l" path="res://scenes/entities/player.gd" id="1_08t41"]
+[ext_resource type="Texture2D" uid="uid://cyppvt2elg2xi" path="res://assets/babi.png" id="1_ucweq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ucweq"]
+size = Vector2(128, 98)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_08t41")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_ucweq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 2)
+shape = SubResource("RectangleShape2D_ucweq")

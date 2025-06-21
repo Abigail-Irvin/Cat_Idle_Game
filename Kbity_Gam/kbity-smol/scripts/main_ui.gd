@@ -28,27 +28,15 @@ extends Control
 
 @export var console: RichTextLabel
 
-var happy_level: float = 0
-var hungi_level: float = 0
-var energy_level: float = 0
-var kbity_bux: float = 0
-var cur_toy_level = 0
-var cur_food_level = 0
-var cur_litter_level = 0
-var cur_bed_level = 0
 var pet_cooldown = 5
 var treat_cooldown = 15
 var play_cooldown = 10
 var brush_cooldown = 10
-var is_pet = false
-var is_treated = false
-var is_played = false
-var is_brushed = false
 
 var eating_cooldown = 10
 var eat_timer = 0
 var is_eat = false
-var mood_cooldown = 40
+var mood_cooldown = 25
 var mood_timer = 0
 var is_mood = false
 
@@ -63,10 +51,6 @@ var eepy_gain_factor = 0.25
 var sad_gain_factor = 0.25
 
 var eating_timer = 0
-var play_timer = 0
-var brush_timer = 0
-var treat_timer = 0
-var pet_timer = 0
 var magic_number = 3.75
 
 enum {PET_KBITY, TREAT_KBITY, PLAY_KBITY, BRUSH_KBITY}
@@ -104,41 +88,41 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	# pet interaction timers
-	if is_pet:
-		pet_timer += delta
-		if pet_timer >= pet_cooldown:
-			pet_timer = 0
-			is_pet = false
-		kbity_ref.get_popup().set_item_text(0, "Pet: Cooldown(" + str(round(pet_cooldown - pet_timer)) + ")")
+	if GlobalData.is_pet:
+		GlobalData.pet_timer += delta
+		if GlobalData.pet_timer >= pet_cooldown:
+			GlobalData.pet_timer = 0
+			GlobalData.is_pet = false
+		kbity_ref.get_popup().set_item_text(0, "Pet: Cooldown(" + str(round(pet_cooldown - GlobalData.pet_timer)) + ")")
 	else:
 		kbity_ref.get_popup().set_item_text(0, "Pet")
-	if is_treated:
-		treat_timer += delta
-		if treat_timer >= treat_cooldown:
-			treat_timer = 0
-			is_treated = false
-		kbity_ref.get_popup().set_item_text(1, "Treat: Cooldown(" + str(round(treat_cooldown - treat_timer)) + ")")
+	if GlobalData.is_treated:
+		GlobalData.treat_timer += delta
+		if GlobalData.treat_timer >= treat_cooldown:
+			GlobalData.treat_timer = 0
+			GlobalData.is_treated = false
+		kbity_ref.get_popup().set_item_text(1, "Treat: Cooldown(" + str(round(treat_cooldown - GlobalData.treat_timer)) + ")")
 	else:
 		kbity_ref.get_popup().set_item_text(1, "Treat")
-	if is_played:
-		play_timer += delta
-		if play_timer >= play_cooldown:
-			play_timer = 0
-			is_played = false
-		kbity_ref.get_popup().set_item_text(2, "Play: Cooldown(" + str(round(play_cooldown - play_timer)) + ")")
+	if GlobalData.is_played:
+		GlobalData.play_timer += delta
+		if GlobalData.play_timer >= play_cooldown:
+			GlobalData.play_timer = 0
+			GlobalData.is_played = false
+		kbity_ref.get_popup().set_item_text(2, "Play: Cooldown(" + str(round(play_cooldown - GlobalData.play_timer)) + ")")
 	else:
 		kbity_ref.get_popup().set_item_text(2, "Play")
-	if is_brushed:
-		brush_timer += delta
-		if brush_timer >= brush_cooldown:
-			brush_timer = 0
-			is_brushed = false
-		kbity_ref.get_popup().set_item_text(3, "Brush: Cooldown(" + str(round(brush_cooldown - brush_timer)) + ")")
+	if GlobalData.is_brushed:
+		GlobalData.brush_timer += delta
+		if GlobalData.brush_timer >= brush_cooldown:
+			GlobalData.brush_timer = 0
+			GlobalData.is_brushed = false
+		kbity_ref.get_popup().set_item_text(3, "Brush: Cooldown(" + str(round(brush_cooldown - GlobalData.brush_timer)) + ")")
 	else:
 		kbity_ref.get_popup().set_item_text(3, "Brush")
 		
 	# normal cat activities
-	if energy_level <= 50:
+	if GlobalData.energy_level <= 50:
 		if not is_eepy:
 			is_eepy = true
 			kbity_ref.icon = load(kbity_eepy_img)
@@ -146,32 +130,35 @@ func _process(delta: float) -> void:
 			
 	if is_eepy:
 		eepy_timer += delta
-		if energy_level <= 100:
-			energy_level += delta * ((cur_bed_level + 1) * sleep_scaling_factor)
+		if GlobalData.energy_level <= 100:
+			GlobalData.energy_level += delta * ((GlobalData.cur_bed_level + 1) * sleep_scaling_factor)
 		else:
-			energy_level = 100
-		if eepy_timer >= eepy_cooldown or energy_level >= 100:
+			GlobalData.energy_level = 100
+		if eepy_timer >= eepy_cooldown or GlobalData.energy_level >= 100:
 			console.text = "kbity wakes up from her slumber."
 			is_eepy = false
 			eepy_timer = 0
 			kbity_ref.icon = load(kbity_awake_img)
 			
-	if hungi_level <= 50 and not is_eepy:
+	if GlobalData.hungi_level <= 50 and not is_eepy:
 		if not is_eat:
 			is_eat = true
 			console.text = "kbity just needs nibl"
-			
+	elif GlobalData.hungi_level > 100:
+		GlobalData.hungi_level = 100
+		
 	if is_eat and not is_eepy:
 		eat_timer += delta
-		if hungi_level <= 100:
-			hungi_level += delta * ((cur_food_level + 1) * eating_scaling_factor)
+		if GlobalData.hungi_level <= 100:
+			GlobalData.hungi_level += delta * ((GlobalData.cur_food_level + 1) * eating_scaling_factor)
 		else:
-			hungi_level = 100
-		if eat_timer >= eating_cooldown or hungi_level >= 100:
+			GlobalData.hungi_level = 100
+		if eat_timer >= eating_cooldown or GlobalData.hungi_level >= 100:
+			GlobalData.hungi_level = 100
 			is_eat = false
 			eat_timer = 0
 				
-	if happy_level <= 25 and not is_eepy and not is_eat:
+	if GlobalData.happy_level <= 25 and not is_eepy and not is_eat:
 		if not is_mood:
 			console.text = "baby kbity is so sad, she just cri"
 			is_mood = true
@@ -181,7 +168,7 @@ func _process(delta: float) -> void:
 				mood_timer = 0
 				is_mood = false
 	
-	if happy_level >= 50 and happy_level <= 75 and not is_eepy and not is_eat:
+	if GlobalData.happy_level >= 50 and GlobalData.happy_level <= 75 and not is_eepy and not is_eat:
 		if not is_mood:
 			console.text = "baby kbity is so happy she purrs and plays with her favorite toy mouse"
 			is_mood = true
@@ -192,7 +179,7 @@ func _process(delta: float) -> void:
 				is_mood = false
 		
 		
-	if happy_level >= 75 and not is_eepy and not is_eat:
+	if GlobalData.happy_level >= 75 and not is_eepy and not is_eat:
 		if not is_mood:
 			console.text = "baby kbity feels so content, she appreciates your gentle care"
 			is_mood = true
@@ -203,113 +190,140 @@ func _process(delta: float) -> void:
 				is_mood = false
 		
 	
-	if not is_eat:
-		if hungi_level - delta * hungi_gain_factor > 0:
-			hungi_level -= delta * hungi_gain_factor / (cur_food_level + 1)
+	if not is_eat and not is_eepy:
+		if GlobalData.hungi_level - delta * hungi_gain_factor > 0:
+			GlobalData.hungi_level -= delta * hungi_gain_factor / (GlobalData.cur_food_level + 1)
 		else:
-			hungi_level = 0
+			GlobalData.hungi_level = 0
 	if not is_eepy:
-		if energy_level - delta * eepy_gain_factor > 0:
-			energy_level -= delta * eepy_gain_factor / (cur_bed_level + 1)
+		if GlobalData.energy_level - delta * eepy_gain_factor > 0:
+			GlobalData.energy_level -= delta * eepy_gain_factor / (GlobalData.cur_bed_level + 1)
 		else:
-			energy_level = 0
-	var base_happy_level = ((cur_bed_level * 3.75) + (cur_food_level*3.75) + (cur_litter_level*3.75) + (cur_toy_level*3.75))
-	if happy_level >= base_happy_level:
-		if happy_level - delta * sad_gain_factor > 0:
-			happy_level -= delta * sad_gain_factor / ((base_happy_level / 37.5) + 1)
+			GlobalData.energy_level = 0
+	var base_happy_level = ((GlobalData.cur_bed_level * 3.75) + (GlobalData.cur_food_level*3.75) + (GlobalData.cur_litter_level*3.75) + (GlobalData.cur_toy_level*3.75))
+	if GlobalData.happy_level >= base_happy_level:
+		if GlobalData.happy_level - delta * sad_gain_factor > 0:
+			GlobalData.happy_level -= delta * sad_gain_factor / ((base_happy_level / 37.5) + 1)
 		else:
-			happy_level = 0
+			GlobalData.happy_level = 0
 	else:
-		happy_level += delta
+		GlobalData.happy_level += delta
 		
 	# Final Graphics Updates:
 	
-	happy_bar.text = "Happiness: " + str(round(happy_level))
-	energy_bar.text = "Energy: " + str(round(energy_level))
-	hungi_bar.text = "Hungi level: " + str(round(hungi_level))
-	kbity_bux_bar.text = "Kbity Bux: " + str(round(kbity_bux))
+	happy_bar.text = "Happiness: " + str(round(GlobalData.happy_level))
+	energy_bar.text = "Energy: " + str(round(GlobalData.energy_level))
+	hungi_bar.text = "Hungi level: " + str(round(GlobalData.hungi_level))
+	kbity_bux_bar.text = "Kbity Bux: " + str(round(GlobalData.coins))
 
 func _process_input(id: int, idx: int) -> void:
 	match id:
 		KBITY:
 			match idx:
 				PET_KBITY:
-					if not is_pet:
+					if not GlobalData.is_pet:
 						console.text = "You pet kbity :3"
-						happy_level += 10
-						kbity_bux += 5
-						is_pet = true
+						GlobalData.happy_level += 10
+						GlobalData.is_pet = true
 				TREAT_KBITY:
-					if not is_treated:
+					if not GlobalData.is_treated and not (is_eepy or is_eat):
 						console.text = "kbity loves eating treats ^w^"
-						happy_level += 5
-						kbity_bux += 25
-						hungi_level += 10
-						is_treated = true
+						GlobalData.happy_level += 5
+						if GlobalData.hungi_level < 100:
+							GlobalData.hungi_level += 10
+						else:
+							GlobalData.hungi_level = 100
+						GlobalData.is_treated = true
+					if is_eepy:
+						console.text = "Kbity is just eepy rn, she eats treat when she wake up"
+					if is_eat:
+						console.text = "Kbity is eating food now, dont ruin her appetite"
 				PLAY_KBITY:
-					if not is_played:
+					if not GlobalData.is_played and GlobalData.happy_level >= 25:
 						console.text = "You play with kbity"
-						happy_level += 5
-						kbity_bux += 5
-						is_played = true
+						GlobalData.happy_level += 5
+						GlobalData.is_played = true
+						get_tree().change_scene_to_file("res://scenes/maps/Kbity_Challenge_Play.tscn")
+					elif GlobalData.happy_level < 25:
+						console.text = "Kbity is too depressed to play, she needs care"
 				BRUSH_KBITY:
-					if not is_brushed:
-						console.text = "kbity purr, she so soft now"
-						happy_level += 10
-						kbity_bux += 10
-						is_brushed = true
+					if not GlobalData.is_brushed and not is_eepy:
+						console.text = "Kbity purr, she so soft now"
+						GlobalData.is_brushed = true
+						get_tree().change_scene_to_file("res://scenes/maps/Brush_Game.tscn")
+					if is_eepy:
+						console.text = "Kbity is just so eepy, brush when she done with nap"
 		TOY:
-			var toy = toy_dict[cur_toy_level]
+			var toy = toy_dict[GlobalData.cur_toy_level]
 			match idx:
 				DETAILS:
 					console.text = toy.desc
 				UPGRADE:
-					if cur_toy_level + 1 < max_level and kbity_bux >= toy.cost:
-						cur_toy_level += 1
-						kbity_bux -= toy.cost
+					if GlobalData.cur_toy_level + 1 < max_level and GlobalData.coins >= toy.cost:
+						GlobalData.cur_toy_level += 1
+						GlobalData.coins -= toy.cost
 						update_icons()
 		BED:
-			var bed = bed_dict[cur_bed_level]
+			var bed = bed_dict[GlobalData.cur_bed_level]
 			match idx:
 				DETAILS:
 					console.text = bed.desc
 				UPGRADE:
-					if cur_bed_level + 1 < max_level and kbity_bux >= bed.cost:
-						cur_bed_level += 1
-						kbity_bux -= bed.cost
+					if GlobalData.cur_bed_level + 1 < max_level and GlobalData.coins >= bed.cost:
+						GlobalData.cur_bed_level += 1
+						GlobalData.coins -= bed.cost
 						update_icons()
 		FOOD:
-			var food = food_dict[cur_food_level]
+			var food = food_dict[GlobalData.cur_food_level]
 			match idx:
 				DETAILS:
 					console.text = food.desc
 				UPGRADE:
-					if cur_food_level + 1 < max_level and kbity_bux >= food.cost:
-						cur_food_level += 1
-						kbity_bux -= food.cost
+					if GlobalData.cur_food_level + 1 < max_level and GlobalData.coins >= food.cost:
+						GlobalData.cur_food_level += 1
+						GlobalData.coins -= food.cost
 						update_icons()
 		LITTER:
-			var litter = litter_dict[cur_litter_level]
+			var litter = litter_dict[GlobalData.cur_litter_level]
 			match idx:
 				DETAILS:
 					console.text = litter.desc
 				UPGRADE:
-					if cur_litter_level + 1 < max_level and kbity_bux >= litter.cost:
-						cur_litter_level += 1
-						kbity_bux -= litter.cost
+					if GlobalData.cur_litter_level + 1 < max_level and GlobalData.coins >= litter.cost:
+						GlobalData.cur_litter_level += 1
+						GlobalData.coins -= litter.cost
 						update_icons()
 						
 func update_icons():
-	var toy = toy_dict[cur_toy_level]
-	var bed = bed_dict[cur_bed_level]
-	var food = food_dict[cur_food_level]
-	var litter = litter_dict[cur_litter_level]
-	toy_ref.get_popup().set_item_text(1, "Upgrade: " + str(toy.cost))
-	bed_ref.get_popup().set_item_text(1, "Upgrade: " + str(bed.cost))
-	food_ref.get_popup().set_item_text(1, "Upgrade: " + str(food.cost))
-	litter_ref.get_popup().set_item_text(1, "Upgrade: " + str(litter.cost))
-	toy_ref.icon = load(toy_img_list[cur_toy_level])
-	bed_ref.icon = load(bed_img_list[cur_bed_level])
-	food_ref.icon = load(food_img_list[cur_food_level])
-	litter_ref.icon = load(litter_img_list[cur_litter_level])
+	var toy = toy_dict[GlobalData.cur_toy_level]
+	var bed = bed_dict[GlobalData.cur_bed_level]
+	var food = food_dict[GlobalData.cur_food_level]
+	var litter = litter_dict[GlobalData.cur_litter_level]
+	if GlobalData.cur_toy_level == max_level:
+		toy_ref.get_popup().set_item_text(1, "Max Upgrade Reached")
+	else:
+		toy_ref.get_popup().set_item_text(1, "Upgrade: " + str(toy.cost))
+		
+	if GlobalData.cur_bed_level == max_level:
+		bed_ref.get_popup().set_item_text(1, "Max Upgrade Reached")
+	else:
+		bed_ref.get_popup().set_item_text(1, "Upgrade: " + str(bed.cost))
+		
+	if GlobalData.cur_food_level == max_level:
+		food_ref.get_popup().set_item_text(1, "Max Upgrade Reached")
+	else:
+		food_ref.get_popup().set_item_text(1, "Upgrade: " + str(food.cost))
+		
+	if GlobalData.cur_litter_level == max_level:
+		litter_ref.get_popup().set_item_text(1, "Max Upgrade Reached")
+	else:
+		litter_ref.get_popup().set_item_text(1, "Upgrade: " + str(litter.cost))
+	
+	
+	
+	
+	toy_ref.icon = load(toy_img_list[GlobalData.cur_toy_level])
+	bed_ref.icon = load(bed_img_list[GlobalData.cur_bed_level])
+	food_ref.icon = load(food_img_list[GlobalData.cur_food_level])
+	litter_ref.icon = load(litter_img_list[GlobalData.cur_litter_level])
 		

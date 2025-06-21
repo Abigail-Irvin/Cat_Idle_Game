@@ -1,0 +1,108 @@
+[gd_scene load_steps=7 format=3 uid="uid://b8iu65uxcta73"]
+
+[ext_resource type="Script" uid="uid://cpqg3qkw4cvck" path="res://scenes/maps/brush_game.gd" id="1_poqmm"]
+[ext_resource type="Texture2D" uid="uid://euq327p8044c" path="res://assets/game_background.png" id="1_xqwea"]
+[ext_resource type="PackedScene" uid="uid://5g36kdoqsena" path="res://scenes/entities/Brush.tscn" id="2_dyrbw"]
+[ext_resource type="Texture2D" uid="uid://cyppvt2elg2xi" path="res://assets/babi.png" id="2_v5msx"]
+[ext_resource type="PackedScene" uid="uid://fk7w0hm584ku" path="res://scenes/entities/dust_bunny.tscn" id="4_xjwps"]
+[ext_resource type="AudioStream" uid="uid://bggcjqnunqmg6" path="res://assets/Babi_Brush.mp3" id="6_omhgr"]
+
+[node name="BrushGame" type="Node2D" node_paths=PackedStringArray("dust_group", "brush_ref", "return_menu", "happy_obtained")]
+script = ExtResource("1_poqmm")
+dust_group = NodePath("Dust Group")
+brush_ref = NodePath("Brush")
+return_menu = NodePath("Return Menu")
+happy_obtained = NodePath("Return Menu/MarginContainer/Panel/VBoxContainer/Happi")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("1_xqwea")
+expand_mode = 5
+
+[node name="Kbity_smol" type="Sprite2D" parent="."]
+position = Vector2(362, 887)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_v5msx")
+
+[node name="Dust Group" type="Node2D" parent="."]
+
+[node name="DustBunny" parent="Dust Group" instance=ExtResource("4_xjwps")]
+position = Vector2(504, 869)
+
+[node name="DustBunny2" parent="Dust Group" instance=ExtResource("4_xjwps")]
+position = Vector2(369, 982)
+
+[node name="DustBunny3" parent="Dust Group" instance=ExtResource("4_xjwps")]
+position = Vector2(552, 980)
+
+[node name="DustBunny4" parent="Dust Group" instance=ExtResource("4_xjwps")]
+position = Vector2(226, 1033)
+
+[node name="DustBunny5" parent="Dust Group" instance=ExtResource("4_xjwps")]
+position = Vector2(230, 680)
+
+[node name="Brush" parent="." instance=ExtResource("2_dyrbw")]
+position = Vector2(638, 1190)
+
+[node name="Return Menu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MarginContainer" type="MarginContainer" parent="Return Menu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Return Menu/MarginContainer"]
+custom_minimum_size = Vector2(300, 110)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Return Menu/MarginContainer/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Game_End" type="RichTextLabel" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "Playtime complete! ^w^"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Happi" type="RichTextLabel" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Coins obtained: "
+fit_content = true
+
+[node name="Cute" type="RichTextLabel" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Cuteness: Infinite"
+fit_content = true
+
+[node name="Return" type="Button" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Return to Kbity home"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_omhgr")
+autoplay = true
+
+[connection signal="pressed" from="Return Menu/MarginContainer/Panel/VBoxContainer/Return" to="." method="_on_return_pressed"]

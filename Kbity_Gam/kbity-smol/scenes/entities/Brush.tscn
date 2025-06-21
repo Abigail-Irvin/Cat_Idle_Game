@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://5g36kdoqsena"]
+
+[ext_resource type="Texture2D" uid="uid://dgawcs6n6yxft" path="res://assets/kbity_brush.png" id="1_3ldc3"]
+[ext_resource type="Script" uid="uid://bodgnxo14d2rm" path="res://scenes/entities/brush.gd" id="1_gdqd6"]
+[ext_resource type="AudioStream" uid="uid://b4h2bpw4bnc17" path="res://assets/Brush_sfx.mp3" id="3_24wjh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ldc3"]
+radius = 104.077
+
+[node name="Brush" type="Area2D" node_paths=PackedStringArray("sound_player")]
+script = ExtResource("1_gdqd6")
+sound_player = NodePath("Brush_Sound")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_3ldc3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-11, 10)
+shape = SubResource("CircleShape2D_3ldc3")
+
+[node name="Brush_Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_24wjh")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

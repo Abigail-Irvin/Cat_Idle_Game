@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 			cur_clean = 0
 
 func _on_return_pressed() -> void:
-	GlobalData.happy_level += 20
+	GlobalData.happy_level += 10
 	GlobalData.paused = false
 	get_tree().change_scene_to_file("res://scenes/maps/Main.tscn")
 

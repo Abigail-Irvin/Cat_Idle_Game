@@ -13,7 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://gn7ch68iblgb" path="res://assets/meow.mp3" id="11_m82f4"]
 [ext_resource type="AudioStream" uid="uid://5xapu8hyipku" path="res://assets/mow.mp3" id="12_8s2gp"]
 
-[node name="MainUi" type="Control" node_paths=PackedStringArray("kbity_ref", "bed_ref", "food_ref", "toy_ref", "litter_ref", "happy_bar", "hungi_bar", "energy_bar", "kbity_bux_bar", "console", "tutorial", "mow_ref", "meow_ref", "chirp_ref")]
+[node name="MainUi" type="Control" node_paths=PackedStringArray("kbity_ref", "bed_ref", "food_ref", "toy_ref", "litter_ref", "happy_bar", "hungi_bar", "energy_bar", "kbity_bux_bar", "console", "tutorial", "mow_ref", "meow_ref", "chirp_ref", "ending")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,10 +38,10 @@ toy_desc_list = ["Old tattered toy mouse, poor kbity 3:", "Brand new mouse, and 
 bed_desc_list = ["Just some old newspapers, kbity nu like sleeping here", "A lil comfy bed for kbity", "comfy bed, now with added pillow support, helps with giving kbity good dreams", "A cozy little cover for the kbity bed, to help when she sleeps in", "Fully enclosed kbity home, nice and cozy"]
 food_desc_list = ["This is just some bologna on a paper plate", "Generic kibble and water", "Name brand kibble and water", "Fresh sushi for kbity!", "Woah kbity has a whole market for her foods- it's bigger on the inside!"]
 litter_desc_list = ["Kbityzon box you've converted to a makeshift litterbox", "Cheap plastic tub for litter, good enough", "This thing said it was an auto scooper- oops you bought the early access- maybe if you keep throwing money at it, it'll get better", "Actually automated litterbox! Yay to no more scooping", "Does kbity need a gamer rgb litterbox? No- but it's cool"]
-toy_cost_list = [5, 10, 15, 20, 25]
-bed_cost_list = [6, 12, 24, 48, 96]
-food_cost_list = [5, 10, 15, 20, 25]
-litter_cost_list = [5, 10, 15, 20, 25]
+toy_cost_list = [10, 90, 270, 810, 2430]
+bed_cost_list = [6, 18, 54, 162, 486]
+food_cost_list = [7, 21, 63, 189, 567]
+litter_cost_list = [3, 9, 27, 81, 243]
 kbity_awake_img = "res://assets/babi.png"
 kbity_eepy_img = "res://assets/babi_eepy.png"
 console = NodePath("Panel/VBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Console")
@@ -49,6 +49,7 @@ tutorial = NodePath("Panel/Tutorial")
 mow_ref = NodePath("mow")
 meow_ref = NodePath("meow")
 chirp_ref = NodePath("chirp")
+ending = NodePath("Panel/Game_Win")
 
 [node name="Panel" type="TextureRect" parent="."]
 layout_mode = 1
@@ -199,7 +200,47 @@ layout_mode = 2
 [node name="Tutorial" parent="Panel" instance=ExtResource("8_yc0ux")]
 layout_mode = 1
 title = "Welcome to Kbity Game"
-filler = "Welcome to the happy little cozy cove of the Kbity. You rescued the little smol recently, and although you don't have many things, you cobble together what you can for your new found friend. Kbity is a sweet cat, and she loves playing games, to play with Kbity, you'll need to make sure she isn't currently asleep or busy eating, and that her happiness is at least 25%, lest she be too sad to play. To help make kbity happy, you can do a few of the following: upgrade furniture and toys, as the current level of all furniture will contribute to a base happiness. Interacting with kbity will increase her happiness, petting increases happiness by 10%, brushing by 20%, and treats by 5%. Playing with kbity is the primary way to generate Kbity-bux, which are used in upgrading her furniture, the higher the toy level, the better multiplier on coins you will get in the minigame. The higher kbity's happiness is, the faster she will also be in the minigame. Hope you enjoy this smol game, about a very smol kbity! :3"
+filler = "Welcome to the happy little cozy cove of the Kbity. You rescued the little smol recently, and although you don't have many things, you cobble together what you can for your new found friend.                                                                   Kbity is a sweet cat, and she loves playing games, to play with Kbity, you'll need to make sure she isn't currently asleep or busy eating, and that her happiness is at least 25%, lest she be too sad to play.                                                   To help make kbity happy, you can do a few of the following: upgrade furniture and toys, as the current level of all furniture will contribute to a base happiness. Interacting with kbity will increase her happiness, petting increases happiness by 1, treats by 2, and brushing by 10.                                                                                              Playing with kbity is the primary way to generate Kbity-bux, which are used in upgrading her furniture, the higher the toy level, the better multiplier on coins you will get in the minigame. The higher kbity's happiness is, the faster she will also be in the minigame. Hope you enjoy this smol game, about a very smol kbity! :3"
+
+[node name="Game_Win" type="MarginContainer" parent="Panel"]
+visible = false
+custom_minimum_size = Vector2(300, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Panel/Game_Win"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Game_Win"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Game_Win/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Game_Win/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "You have beaten the game! Kbity is so pleased that you spent this time with her, and helped make her a kitty paradise!
+
+Thank you again for playing, you can keep going on from here if you want to just play around, but that's all there is for this short demo, take care! ^w^"
+
+[node name="Win_Game" type="Button" parent="Panel/Game_Win/VBoxContainer"]
+layout_mode = 2
+text = "Exit to main menu"
+
+[node name="Moar" type="Button" parent="Panel/Game_Win/VBoxContainer"]
+layout_mode = 2
+text = "I want to keep playing with Kbity!"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
@@ -220,3 +261,6 @@ bus = &"Sfx"
 [node name="mow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_8s2gp")
 bus = &"Sfx"
+
+[connection signal="pressed" from="Panel/Game_Win/VBoxContainer/Win_Game" to="." method="_on_win_game_pressed"]
+[connection signal="pressed" from="Panel/Game_Win/VBoxContainer/Moar" to="." method="_on_moar_pressed"]

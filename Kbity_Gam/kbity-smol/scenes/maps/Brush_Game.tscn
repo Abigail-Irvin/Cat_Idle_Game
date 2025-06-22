@@ -121,6 +121,6 @@ layout_mode = 2
 [node name="Tutorial" parent="Pause" instance=ExtResource("8_w4sji")]
 nag_selection = 2
 title = "Brushing Kbity"
-filler = "You get the brush the little kbity to make her fur soft and fluffy. To brush cat, just run the brush over the knotted fur patches, being sure to brush over the same spot a few times to make sure it's cleaned up. Once all the fur is properly brushed kbity will be super happy!"
+filler = "You get to brush the little kbity to make her fur soft and fluffy. To brush cat, just run the brush over the knotted fur patches, being sure to brush over the same spot a few times to make sure it's cleaned up. Once all the fur is properly brushed kbity will be super happy!"
 
 [connection signal="pressed" from="Return Menu/MarginContainer/Panel/VBoxContainer/Return" to="." method="_on_return_pressed"]

@@ -206,7 +206,7 @@ layout_mode = 2
 [node name="Tutorial" parent="Main_UI" instance=ExtResource("9_t2ufs")]
 nag_selection = 1
 title = "Platformer Challenge"
-filler = "The platform challenge is a game that kbity loves playing. Don't worry if she falls, there is a soft cushion to catch her! The controls for the game are A/D or left/right arrows. The jump button / Space for jumping. Kbity's happiness will boost her movement by a percentage if over 100, beware happiness under 100 will have a negative effect on speed. The level of the food bowl will determine how slowly her energy depletes in exercise, and lastly the level of the toy will determine coin output, providing better bonuses at higher levels! Good luck and have fun! =3"
+filler = "Jumping around and playing is something that kbity loves to do. Don't worry if she falls, there is a soft cushion to catch her!                                                                                                      The controls for the game are A/D or Left/Right arrows. The Jump button / Space for jumping. Kbity's happiness will boost her movement by a percentage if over 100, beware happiness under 100 will slow her down.                                                           The level of the food bowl will determine how slowly her energy depletes in exercise, and lastly the level of the toy kbity has, along with her current happiness, will determine coin output, providing better bonuses at higher levels for both! Good luck and have fun! =3"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="pressed" from="Return Menu/MarginContainer/Panel/VBoxContainer/Return" to="." method="_on_return_pressed"]

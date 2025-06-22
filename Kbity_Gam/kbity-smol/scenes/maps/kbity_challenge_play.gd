@@ -50,7 +50,7 @@ func _on_coin_body_entered(body: Node2D) -> void:
 		if GlobalData.happy_level <= 100:
 			coin_count += 1
 		elif GlobalData.happy_level > 100:
-			coin_count += ceil(1 * (GlobalData.cur_toy_level + 1))
+			coin_count += ceil(1 * (GlobalData.cur_toy_level + 1) * ((GlobalData.happy_level / 100) + 1))
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "Player":

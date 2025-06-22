@@ -32,6 +32,7 @@ extends Control
 @export var mow_ref: AudioStreamPlayer2D
 @export var meow_ref: AudioStreamPlayer2D
 @export var chirp_ref: AudioStreamPlayer2D
+@export var ending: MarginContainer
 
 var pet_cooldown = 5
 var treat_cooldown = 15
@@ -48,6 +49,7 @@ var is_mood = false
 var is_eepy = false
 var eepy_cooldown = 10
 var eepy_timer = 0
+var want_moar = false
 
 var sleep_scaling_factor = 2
 var eating_scaling_factor = 2
@@ -102,6 +104,11 @@ func _ready() -> void:
 	update_icons()
 	
 func _process(delta: float) -> void:
+	if GlobalData.cur_bed_level + GlobalData.cur_food_level + GlobalData.cur_litter_level + GlobalData.cur_toy_level == 16:
+		if not want_moar:
+			ending.visible = true
+			GlobalData.paused = true
+		
 	if GlobalData.paused:
 		return
 	
@@ -249,14 +256,14 @@ func _process_input(id: int, idx: int) -> void:
 				PET_KBITY:
 					if not GlobalData.is_pet:
 						console.text = "You pet kbity :3"
-						GlobalData.happy_level += 10
+						GlobalData.happy_level += 1
 						GlobalData.is_pet = true
 				TREAT_KBITY:
 					if not GlobalData.is_treated and not (is_eepy or is_eat):
 						console.text = "kbity loves eating treats ^w^"
-						GlobalData.happy_level += 5
+						GlobalData.happy_level += 2
 						if GlobalData.hungi_level < 100:
-							GlobalData.hungi_level += 10
+							GlobalData.hungi_level += 1
 						else:
 							GlobalData.hungi_level = 100
 						GlobalData.is_treated = true
@@ -267,7 +274,7 @@ func _process_input(id: int, idx: int) -> void:
 				PLAY_KBITY:
 					if not GlobalData.is_played and GlobalData.happy_level >= 25:
 						console.text = "You play with kbity"
-						GlobalData.happy_level += 5
+						GlobalData.happy_level += 1
 						GlobalData.is_played = true
 						GlobalData.paused = false
 						get_tree().change_scene_to_file("res://scenes/maps/Kbity_Challenge_Play.tscn")
@@ -287,7 +294,7 @@ func _process_input(id: int, idx: int) -> void:
 				DETAILS:
 					console.text = toy.desc
 				UPGRADE:
-					if GlobalData.cur_toy_level + 1 < len(toy_cost_list) - 1 and GlobalData.coins >= toy.cost:
+					if GlobalData.cur_toy_level + 1 < len(toy_cost_list) and GlobalData.coins >= toy.cost:
 						GlobalData.cur_toy_level += 1
 						GlobalData.coins -= toy.cost
 						update_icons()
@@ -297,7 +304,7 @@ func _process_input(id: int, idx: int) -> void:
 				DETAILS:
 					console.text = bed.desc
 				UPGRADE:
-					if GlobalData.cur_bed_level + 1 < len(bed_cost_list) - 1 and GlobalData.coins >= bed.cost:
+					if GlobalData.cur_bed_level + 1 < len(bed_cost_list) and GlobalData.coins >= bed.cost:
 						GlobalData.cur_bed_level += 1
 						GlobalData.coins -= bed.cost
 						update_icons()
@@ -307,7 +314,7 @@ func _process_input(id: int, idx: int) -> void:
 				DETAILS:
 					console.text = food.desc
 				UPGRADE:
-					if GlobalData.cur_food_level + 1 < len(food_cost_list) - 1 and GlobalData.coins >= food.cost:
+					if GlobalData.cur_food_level + 1 < len(food_cost_list) and GlobalData.coins >= food.cost:
 						GlobalData.cur_food_level += 1
 						GlobalData.coins -= food.cost
 						update_icons()
@@ -317,7 +324,7 @@ func _process_input(id: int, idx: int) -> void:
 				DETAILS:
 					console.text = litter.desc
 				UPGRADE:
-					if GlobalData.cur_litter_level + 1 < len(litter_cost_list) - 1 and GlobalData.coins >= litter.cost:
+					if GlobalData.cur_litter_level + 1 < len(litter_cost_list) and GlobalData.coins >= litter.cost:
 						GlobalData.cur_litter_level += 1
 						GlobalData.coins -= litter.cost
 						update_icons()
@@ -355,3 +362,15 @@ func update_icons():
 	food_ref.icon = load(food_img_list[GlobalData.cur_food_level])
 	litter_ref.icon = load(litter_img_list[GlobalData.cur_litter_level])
 		
+
+
+func _on_win_game_pressed() -> void:
+	GlobalData.save_data(GlobalData.SAVE_DIR + GlobalData.SAVE_FILE_NAME)
+	get_tree().change_scene_to_file("res://scenes/maps/title_map.tscn")
+
+
+func _on_moar_pressed() -> void:
+	GlobalData.paused = false
+	ending.visible = false
+	want_moar = true
+	

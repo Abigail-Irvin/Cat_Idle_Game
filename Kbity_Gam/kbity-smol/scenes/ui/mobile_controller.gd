@@ -23,20 +23,26 @@ func _process(delta: float) -> void:
 	else:
 		_generic_input_process("jump", false)
 
-func _on_left_button_down() -> void:
+
+func _on_left_pressed() -> void:
 	left_pressed = true
-	
-func _on_left_button_up() -> void:
+
+
+func _on_left_released() -> void:
 	left_pressed = false
-	
-func _on_jump_button_down() -> void:
+
+
+func _on_jump_pressed() -> void:
 	jump_pressed = true
-	
-func _on_jump_button_up() -> void:
+
+
+func _on_jump_released() -> void:
 	jump_pressed = false
 
-func _on_right_button_down() -> void:
+
+func _on_right_pressed() -> void:
 	right_pressed = true
-	
-func _on_right_button_up() -> void:
+
+
+func _on_right_released() -> void:
 	right_pressed = false

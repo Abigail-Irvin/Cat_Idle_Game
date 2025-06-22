@@ -35,9 +35,9 @@ extends Control
 @export var ending: MarginContainer
 
 var pet_cooldown = 5
-var treat_cooldown = 15
-var play_cooldown = 10
-var brush_cooldown = 10
+var treat_cooldown = 10
+var play_cooldown = 7
+var brush_cooldown = 5
 
 var eating_cooldown = 10
 var eat_timer = 0
@@ -259,7 +259,7 @@ func _process_input(id: int, idx: int) -> void:
 						GlobalData.happy_level += 1
 						GlobalData.is_pet = true
 				TREAT_KBITY:
-					if not GlobalData.is_treated and not (is_eepy or is_eat):
+					if not GlobalData.is_treated and not is_eepy:
 						console.text = "kbity loves eating treats ^w^"
 						GlobalData.happy_level += 2
 						if GlobalData.hungi_level < 100:
@@ -269,8 +269,7 @@ func _process_input(id: int, idx: int) -> void:
 						GlobalData.is_treated = true
 					if is_eepy:
 						console.text = "Kbity is just eepy rn, she eats treat when she wake up"
-					if is_eat:
-						console.text = "Kbity is eating food now, dont ruin her appetite"
+						
 				PLAY_KBITY:
 					if not GlobalData.is_played and GlobalData.happy_level >= 25:
 						console.text = "You play with kbity"

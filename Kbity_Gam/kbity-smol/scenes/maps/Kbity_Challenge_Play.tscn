@@ -77,19 +77,24 @@ commander_ref = NodePath("../..")
 layer = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 200.0
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -244.0
+offset_bottom = 67.0
+grow_horizontal = 0
 size_flags_horizontal = 3
+theme_override_constants/margin_top = 150
+
+[node name="Panel" type="Panel" parent="CanvasLayer2/MarginContainer"]
+layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/MarginContainer"]
 layout_mode = 2
 
 [node name="Energy" type="RichTextLabel" parent="CanvasLayer2/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
 text = "Kbity Energy: 100"
 fit_content = true
 vertical_alignment = 1
@@ -104,8 +109,9 @@ texture = ExtResource("5_doi00")
 expand_mode = 2
 
 [node name="Coin text" type="RichTextLabel" parent="CanvasLayer2/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(250, 55)
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
 text = "Kbity-bux: 0"
 vertical_alignment = 1
 
@@ -142,7 +148,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Return Menu/MarginContainer"]
-custom_minimum_size = Vector2(300, 110)
+custom_minimum_size = Vector2(300, 170)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Return Menu/MarginContainer/Panel"]
@@ -169,6 +175,7 @@ text = "Cuteness: Infinite"
 fit_content = true
 
 [node name="Return" type="Button" parent="Return Menu/MarginContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 text = "Return to Kbity home"
 
@@ -188,17 +195,18 @@ offset_bottom = 40.0
 layout_mode = 2
 
 [node name="Controller_Container" type="MarginContainer" parent="Main_UI"]
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
-grow_horizontal = 0
+offset_left = -87.5
+offset_top = -55.0
+offset_right = 87.5
+grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_right = 175
-theme_override_constants/margin_bottom = 55
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 200
 
 [node name="MobileController" parent="Main_UI/Controller_Container" instance=ExtResource("8_t2ufs")]
 layout_mode = 2

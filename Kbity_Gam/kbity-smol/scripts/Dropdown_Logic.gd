@@ -6,6 +6,7 @@ enum CLICK_TYPE {KBITY, TOY, BED, FOOD, LITTER}
 
 func _ready():
 	# Sets up the popup menu to have a callback method
+	self.get_popup().add_theme_font_size_override("font_size", 25)
 	self.get_popup().id_pressed.connect(_on_menu_pressed)
 
 func _on_menu_pressed(idx: int) -> void:

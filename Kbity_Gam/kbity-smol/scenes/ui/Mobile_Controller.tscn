@@ -34,30 +34,37 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Left" type="Button" parent="Controller/HBoxContainer"]
-custom_minimum_size = Vector2(100, 100)
+[node name="MarginContainer" type="MarginContainer" parent="Controller/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-icon = ExtResource("1_dkdi1")
-flat = true
-expand_icon = true
 
-[node name="Jump" type="Button" parent="Controller/HBoxContainer"]
-custom_minimum_size = Vector2(100, 100)
+[node name="Left" type="TouchScreenButton" parent="Controller/HBoxContainer/MarginContainer"]
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("1_dkdi1")
+texture_pressed = ExtResource("1_dkdi1")
+
+[node name="MarginContainer3" type="MarginContainer" parent="Controller/HBoxContainer"]
 layout_mode = 2
-icon = ExtResource("2_5ki2t")
-flat = true
-expand_icon = true
+theme_override_constants/margin_right = 200
 
-[node name="Right" type="Button" parent="Controller/HBoxContainer"]
-custom_minimum_size = Vector2(100, 100)
+[node name="Right" type="TouchScreenButton" parent="Controller/HBoxContainer/MarginContainer3"]
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("1_bi6je")
+texture_pressed = ExtResource("1_bi6je")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Controller/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
-icon = ExtResource("1_bi6je")
-flat = true
-expand_icon = true
+theme_override_constants/margin_left = 50
 
-[connection signal="button_down" from="Controller/HBoxContainer/Left" to="." method="_on_left_button_down"]
-[connection signal="button_up" from="Controller/HBoxContainer/Left" to="." method="_on_left_button_up"]
-[connection signal="button_down" from="Controller/HBoxContainer/Jump" to="." method="_on_jump_button_down"]
-[connection signal="button_up" from="Controller/HBoxContainer/Jump" to="." method="_on_jump_button_up"]
-[connection signal="button_down" from="Controller/HBoxContainer/Right" to="." method="_on_right_button_down"]
-[connection signal="button_up" from="Controller/HBoxContainer/Right" to="." method="_on_right_button_up"]
+[node name="Jump" type="TouchScreenButton" parent="Controller/HBoxContainer/MarginContainer2"]
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("2_5ki2t")
+texture_pressed = ExtResource("2_5ki2t")
+
+[connection signal="pressed" from="Controller/HBoxContainer/MarginContainer/Left" to="." method="_on_left_pressed"]
+[connection signal="released" from="Controller/HBoxContainer/MarginContainer/Left" to="." method="_on_left_released"]
+[connection signal="pressed" from="Controller/HBoxContainer/MarginContainer3/Right" to="." method="_on_right_pressed"]
+[connection signal="released" from="Controller/HBoxContainer/MarginContainer3/Right" to="." method="_on_right_released"]
+[connection signal="pressed" from="Controller/HBoxContainer/MarginContainer2/Jump" to="." method="_on_jump_pressed"]
+[connection signal="released" from="Controller/HBoxContainer/MarginContainer2/Jump" to="." method="_on_jump_released"]

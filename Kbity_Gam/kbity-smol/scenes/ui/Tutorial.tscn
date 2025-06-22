@@ -59,6 +59,7 @@ theme_override_constants/margin_right = 10
 [node name="BlahText" type="RichTextLabel" parent="MarginContainer/Panel/VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
 text = "There"
 
 [node name="NagBox" type="MarginContainer" parent="MarginContainer/Panel/VBoxContainer"]
@@ -90,6 +91,7 @@ size_flags_vertical = 10
 layout_mode = 2
 
 [node name="Resume" type="Button" parent="MarginContainer/Panel/VBoxContainer/Continue/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 text = "Ready!"
 

@@ -23,9 +23,9 @@ var paused = false
 @onready var MASTER_BUS_ID = AudioServer.get_bus_index("Master")
 @onready var MUSIC_BUS_ID = AudioServer.get_bus_index("Music")
 @onready var SFX_BUS_ID = AudioServer.get_bus_index("Sfx")
-var master_volume = 100
-var music_volume = 50
-var sfx_volume = 50
+var master_volume = 1
+var music_volume = 0.5
+var sfx_volume = 0.5
 
 var fresh_game = true
 var nag_toggle_brush = true
@@ -40,6 +40,15 @@ const CONFIG_DIR = "user://config/"
 const CONFIG_FILE_NAME = "config.json"
 
 func _ready() -> void:
+	AudioServer.set_bus_volume_db(MASTER_BUS_ID, linear_to_db(master_volume))
+	AudioServer.set_bus_mute(MASTER_BUS_ID, master_volume < 0.05)
+	
+	AudioServer.set_bus_volume_db(MUSIC_BUS_ID, linear_to_db(music_volume))
+	AudioServer.set_bus_mute(MUSIC_BUS_ID, music_volume < 0.05)
+	
+	AudioServer.set_bus_volume_db(SFX_BUS_ID, linear_to_db(sfx_volume))
+	AudioServer.set_bus_mute(SFX_BUS_ID, sfx_volume < 0.05)
+	
 	verify_save_directory(GlobalData.SAVE_DIR)
 	verify_config_directory(GlobalData.CONFIG_DIR)
 
